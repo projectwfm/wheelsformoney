@@ -70,4 +70,20 @@ public class UserService {
 
 		}
 	}
+	 public String pswdrequest(String data,String newpass)
+	    {
+	    	User u1=usersRepository.getUserBydata(data);
+	    	if(u1!=null)
+	    	{
+	    		u1.setPassword(newpass);
+	    		usersRepository.save(u1);
+	    		return "password resetted sucessfully";
+	    		
+	    	}
+	    	else
+	    	{
+	    		return "There is no user found with "+data+" signup first please!!.... ";
+	    	}
+	    
+	    }
 }
