@@ -32,4 +32,13 @@ public class UserController {
 		}
 		return new ResponseEntity<>(HttpStatusCode.valueOf(400));
 	}
+    @RequestMapping("/login")
+    public ResponseEntity<Object> login(@RequestParam String user,@RequestParam String password)
+    { 
+    	if(userService.login(user, password) instanceof User)
+    	{
+    		return ResponseEntity.status(200).body(userService.login(user, password));
+    	}
+    	return ResponseEntity.status(400).body(userService.login(user, password)); 
+    } 
 }

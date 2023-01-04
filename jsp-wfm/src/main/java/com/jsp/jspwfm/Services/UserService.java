@@ -1,7 +1,9 @@
 package com.jsp.jspwfm.Services;
 
 import com.jsp.jspwfm.Dao.UsersRepository;
+import com.jsp.jspwfm.Exception.PasswordInvalidException;
 import com.jsp.jspwfm.Exception.UserAlreadyExistsException;
+import com.jsp.jspwfm.Exception.UserNotFoundException;
 import com.jsp.jspwfm.Models.Entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -39,4 +41,33 @@ public class UserService {
 			return false;
 		}
     }
+	public Object login(String usernameOrEmail, String password) {
+
+		User user = usersRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail);
+
+		if (user != null) {
+			if (user.getPassword().equals(password))
+
+			{
+				return user;
+			} 
+			else {
+				try {
+					throw new PasswordInvalidException();
+				} catch (PasswordInvalidException exception) {
+					return exception.getMessage();
+
+				}
+			}
+		}
+
+		try
+
+		{
+			throw new UserNotFoundException();
+		} catch (UserNotFoundException exception) {
+			return exception.getMessage();
+
+		}
+	}
 }
