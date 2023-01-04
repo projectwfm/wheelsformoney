@@ -41,4 +41,18 @@ public class UserController {
     	}
     	return ResponseEntity.status(400).body(userService.login(user, password)); 
     } 
+    @RequestMapping("/resetpswd")
+    public ResponseEntity<String> pswdrequest(@RequestParam String data,@RequestParam String newpass)
+    {
+    	String s=userService.pswdrequest(data, newpass);
+    	if("password resetted sucessfully".equals(s))
+    	{
+    		return new ResponseEntity<String> (s, HttpStatusCode.valueOf(200));
+    	}
+    	else {
+    		return new ResponseEntity<String> (s, HttpStatusCode.valueOf(400));
+    	}
+    	
+    }    
+    
 }
