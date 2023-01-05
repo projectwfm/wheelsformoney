@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 @RestController
 @CrossOrigin
 @RequestMapping("/user")
@@ -33,7 +34,7 @@ public class UserController {
 		return new ResponseEntity<>(HttpStatusCode.valueOf(400));
 	}
     @RequestMapping("/login")
-    public ResponseEntity<Object> login(@RequestParam String user,@RequestParam String password)
+    public ResponseEntity<Object> login(@RequestHeader String user,@RequestHeader String password)
     { 
     	if(userService.login(user, password) instanceof User)
     	{
