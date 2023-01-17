@@ -33,6 +33,31 @@ public class UserController {
 		}
 		return new ResponseEntity<>(HttpStatusCode.valueOf(400));
 	}
+    @RequestMapping("/sendotp")
+    public ResponseEntity<Object> verifymail(@RequestHeader String email,@RequestHeader String type)
+    {
+    	Object otp=userService.verifymail(email,type);
+    	if(otp.toString().equals("User Not Found")||otp.toString().equals("User Already Exists"))
+    	{
+    		return new ResponseEntity<>(HttpStatusCode.valueOf(400));
+    	}
+    	return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+
+    }
+    
+    @RequestMapping("/verifyotp")
+    public ResponseEntity verifyotp(@RequestHeader String email,@RequestHeader int otp)
+    {
+    	Boolean verify = userService.verifyOTP(email,otp);
+		if (verify) {
+			return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+		} else {
+			return new ResponseEntity<>(HttpStatusCode.valueOf(400));
+		}
+
+    }
+    
+    
     @RequestMapping("/login")
     public ResponseEntity<Object> login(@RequestHeader String user,@RequestHeader String password)
     { 
@@ -42,11 +67,11 @@ public class UserController {
     	}
     	return ResponseEntity.status(400).body(userService.login(user, password)); 
     } 
-    @RequestMapping("/resetpswd")
-    public ResponseEntity<String> pswdrequest(@RequestParam String data,@RequestParam String newpass)
+    @RequestMapping("/setnewpassword")
+    public ResponseEntity<String> pswdrequest(@RequestHeader String newpassword,@RequestHeader String email)
     {
-    	String s=userService.pswdrequest(data, newpass);
-    	if("password resetted sucessfully".equals(s))
+    	String s=userService.pswdrequest(newpassword, email);
+    	if("password updated sucessfully....!!!!!!".equals(s))
     	{
     		return new ResponseEntity<String> (s, HttpStatusCode.valueOf(200));
     	}
