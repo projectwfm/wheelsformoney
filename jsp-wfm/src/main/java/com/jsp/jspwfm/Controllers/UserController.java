@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 @RestController
@@ -79,6 +80,16 @@ public class UserController {
     		return new ResponseEntity<String> (s, HttpStatusCode.valueOf(400));
     	}
     	
-    }    
+    }   
+    
+    @PutMapping("/editprofile")
+    public ResponseEntity edit(@RequestBody User user)
+    {
+    	if(userService.edit(user))
+    	{
+    		return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+    	}
+    	return new ResponseEntity<>(HttpStatusCode.valueOf(400 ));
+    }
     
 }
