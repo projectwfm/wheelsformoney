@@ -5,9 +5,13 @@ import com.jsp.jspwfm.Dao.UsersRepository;
 import com.jsp.jspwfm.Exception.PasswordInvalidException;
 import com.jsp.jspwfm.Exception.UserAlreadyExistsException;
 import com.jsp.jspwfm.Exception.UserNotFoundException;
+import com.jsp.jspwfm.Models.Entities.Address;
+import com.jsp.jspwfm.Models.Entities.Address1;
 import com.jsp.jspwfm.Models.Entities.MailMessage;
 import com.jsp.jspwfm.Models.Entities.Otp;
 import com.jsp.jspwfm.Models.Entities.User;
+
+
 
 import java.util.Random;
 
@@ -198,4 +202,19 @@ public class UserService {
 	    	}
 	    
 	    }
+	 public boolean edit(User user)
+	 {
+		 User u = usersRepository.getUserByUsername(user.getUsername());
+		 
+		 Address ad = user.getAddress();
+		 Address1 ad1 = ad.getAddress1(); 
+		 ad.setAddress1(ad1);
+		 u.setUsername(user.getUsername());
+		 u.setDob(user.getDob());
+		 u.setGender(user.getGender());
+		 u.setPhno(user.getPhno());
+		 usersRepository.save(u);
+		return true;
+		 
+	 }
 }
