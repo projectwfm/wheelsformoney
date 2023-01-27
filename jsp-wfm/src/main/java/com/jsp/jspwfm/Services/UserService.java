@@ -209,6 +209,7 @@ public class UserService {
 		 Address ad = user.getAddress();
 		 Address1 ad1 = ad.getAddress1(); 
 		 ad.setAddress1(ad1);
+		 u.setAddress(ad);
 		 u.setUsername(user.getUsername());
 		 u.setDob(user.getDob());
 		 u.setGender(user.getGender());
@@ -216,5 +217,9 @@ public class UserService {
 		 usersRepository.save(u);
 		return true;
 		 
+	 }
+	 public User getUserData(String username)
+	 {
+		 return usersRepository.getUserByUsername(username);
 	 }
 }

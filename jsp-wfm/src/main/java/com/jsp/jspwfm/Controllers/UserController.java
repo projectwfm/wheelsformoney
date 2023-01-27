@@ -92,4 +92,10 @@ public class UserController {
     	return new ResponseEntity<>(HttpStatusCode.valueOf(400 ));
     }
     
+    @RequestMapping("/getUserData")
+    public ResponseEntity<User> get(@RequestParam String username)
+    {
+    	return new ResponseEntity<>(userService.getUserData(username), HttpStatusCode.valueOf(200));
+    }
+    
 }

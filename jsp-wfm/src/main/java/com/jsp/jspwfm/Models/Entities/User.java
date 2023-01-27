@@ -9,10 +9,11 @@ import jakarta.persistence.Table;
 import lombok.*;
 
 @Data
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@ToString
+//@Getter
+//@Setter
+//@NoArgsConstructor
+//@AllArgsConstructor
 @Entity
 @Table(name = "Users")
 public class User {
@@ -38,62 +39,62 @@ public class User {
 
 
 
-	@Override
-	public String toString() {
-		return "User [address=" + address + ", user_id=" + user_id + ", username=" + username + ", password=" + password
-				+ ", email=" + email + ", dob=" + dob + ", gender=" + gender + ", phno=" + phno + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "User [address=" + address + ", user_id=" + user_id + ", username=" + username + ", password=" + password
+//				+ ", email=" + email + ", dob=" + dob + ", gender=" + gender + ", phno=" + phno + "]";
+//	}
 
 
 
-	public Address getAddress() {
-		return address;
-	}
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-	public long getUser_id() {
-		return user_id;
-	}
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getDob() {
-		return dob;
-	}
-	public void setDob(String dob) {
-		this.dob = dob;
-	}
-	public String getGender() {
-		return gender;
-	}
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-	public long getPhno() {
-		return phno;
-	}
-	public void setPhno(long phno) {
-		this.phno = phno;
-	}
+//	public Address getAddress() {
+//		return address;
+//	}
+//	public void setAddress(Address address) {
+//		this.address = address;
+//	}
+//	public long getUser_id() {
+//		return user_id;
+//	}
+//	public void setUser_id(long user_id) {
+//		this.user_id = user_id;
+//	}
+//	public String getUsername() {
+//		return username;
+//	}
+//	public void setUsername(String username) {
+//		this.username = username;
+//	}
+//	public String getPassword() {
+//		return password;
+//	}
+//	public void setPassword(String password) {
+//		this.password = password;
+//	}
+//	public String getEmail() {
+//		return email;
+//	}
+//	public void setEmail(String email) {
+//		this.email = email;
+//	}
+//	public String getDob() {
+//		return dob;
+//	}
+//	public void setDob(String dob) {
+//		this.dob = dob;
+//	}
+//	public String getGender() {
+//		return gender;
+//	}
+//	public void setGender(String gender) {
+//		this.gender = gender;
+//	}
+//	public long getPhno() {
+//		return phno;
+//	}
+//	public void setPhno(long phno) {
+//		this.phno = phno;
+//	}
 
 
 
