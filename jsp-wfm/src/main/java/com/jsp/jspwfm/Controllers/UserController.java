@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 @RestController
@@ -59,7 +60,7 @@ public class UserController {
     
     
     @RequestMapping("/login")
-    public ResponseEntity<Object> login(@RequestParam String user,@RequestParam String password)
+    public ResponseEntity<Object> login(@RequestHeader String user,@RequestHeader String password)
     { 
     	if(userService.login(user, password) instanceof User)
     	{
@@ -67,6 +68,23 @@ public class UserController {
     	}
     	return ResponseEntity.status(400).body(userService.login(user, password)); 
     } 
+    
+    
+    @PutMapping("/editprofile")
+    public ResponseEntity edit(@RequestBody User user)
+    {
+    	if(userService.edit(user))
+    	{
+    		return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+    	}
+    	return new ResponseEntity<>(HttpStatusCode.valueOf(400 ));
+    }
+    
+    @RequestMapping("/getUserData")
+    public ResponseEntity<User> get(@RequestParam String username)
+    {
+    	return new ResponseEntity<>(userService.getUserData(username), HttpStatusCode.valueOf(200));
+    }
     @RequestMapping("/setnewpassword")
     public ResponseEntity<String> pswdrequest(@RequestHeader String newpassword,@RequestHeader String email)
     {
@@ -81,4 +99,35 @@ public class UserController {
     	
     }    
     
+    @RequestMapping("/cardpayment")
+    public ResponseEntity<String> cardpayment(@RequestHeader String cardno,@RequestHeader String cvv,@RequestHeader String email)
+    {
+    	long cardno1=Long.parseLong(cardno); 
+    	int cvv1=Integer.parseInt(cvv); 
+    	boolean s=userService.cardpayment(cardno1, cvv1,email);
+    	if(s==true)
+    	{
+    		return ResponseEntity.status(200).body("payment done sucessfully");
+    	}
+    	else {
+    		return ResponseEntity.status(400).body("payment is unsucessful");
+    	}
+    	
+    
+    }
+    @RequestMapping("/upipayment")
+    public ResponseEntity<String> upipayment(@RequestHeader String upi_id,@RequestHeader String email)
+    {
+    	boolean s=userService.upipayment(upi_id,email);
+    	if(s==true)
+    	{
+    		return ResponseEntity.status(200).body("payment done sucessfully");
+    	}
+    	else {
+    		return ResponseEntity.status(400).body("payment is unsucessful");
+    	}
+    	
+    
+    }
+   
 }

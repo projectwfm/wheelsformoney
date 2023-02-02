@@ -5,6 +5,8 @@ import com.jsp.jspwfm.Dao.UsersRepository;
 import com.jsp.jspwfm.Exception.PasswordInvalidException;
 import com.jsp.jspwfm.Exception.UserAlreadyExistsException;
 import com.jsp.jspwfm.Exception.UserNotFoundException;
+import com.jsp.jspwfm.Models.Entities.Address;
+import com.jsp.jspwfm.Models.Entities.Address1;
 import com.jsp.jspwfm.Models.Entities.MailMessage;
 import com.jsp.jspwfm.Models.Entities.Otp;
 import com.jsp.jspwfm.Models.Entities.User;
@@ -153,9 +155,9 @@ public class UserService {
 
     	}
 
-	public Object login(String usernameOrEmail, String password) {
+	public Object login(String user1, String password) {
 
-		User user = usersRepository.findByUsernameOrEmail(usernameOrEmail);
+		User user = usersRepository.findByUsernameOrEmail(user1);
 
 		if (user != null) {
 			if (user.getPassword().equals(password))
@@ -198,4 +200,67 @@ public class UserService {
 	    	}
 	    
 	    }
+	 
+	 
+	 
+	 public boolean edit(User user)
+	 {
+		 User u = usersRepository.getUserByUsername(user.getUsername());
+		 
+		 Address ad = user.getAddress();
+		 Address1 ad1 = ad.getAddress1(); 
+		 ad.setAddress1(ad1);
+		 u.setAddress(ad);
+		 u.setUsername(user.getUsername());
+		 u.setDob(user.getDob());
+		 u.setGender(user.getGender());
+		 u.setPhno(user.getPhno());
+		 usersRepository.save(u);
+		return true;
+		 
+	 }
+	 public User getUserData(String username)
+	 {
+		 return usersRepository.getUserByUsername(username);
+	 }
+	 public boolean cardpayment(long cardno,int cvv,String email)
+	 {
+		 int len = (int) (Math.log10(cardno) + 1);
+		 int len1 = (int) (Math.log10(cvv) + 1);
+		 if(len==16&&len1==3)
+		 {
+	    		String s=MailMessage.s4;
+				SimpleMailMessage mailMessage = new SimpleMailMessage();
+				mailMessage.setFrom(fromemail);
+				mailMessage.setTo(email);
+				mailMessage.setText(s);
+				mailMessage.setSubject("PAYMENT MAIL");
+				mailsender.send(mailMessage);
+			 return true;
+		 }
+		 else
+		 {
+			 return false;
+		 }
+	 }
+	 public boolean upipayment(String upi_id,String email )
+	 {
+		 int i=upi_id.indexOf('@');
+		 if(i>0)
+		 {
+			 
+			 String s=MailMessage.s5;
+				SimpleMailMessage mailMessage = new SimpleMailMessage();
+				mailMessage.setFrom(fromemail);
+				mailMessage.setTo(email);
+				mailMessage.setText(s);
+				mailMessage.setSubject("PAYMENT MAIL");
+				mailsender.send(mailMessage);
+			 return true;
+		 }
+		 else
+		 {
+			 return false;
+		 }
+	 }
 }
