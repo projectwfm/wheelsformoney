@@ -1,19 +1,9 @@
 package com.jsp.jspwfm.Models.Entities;
 
-public class MailMessage 
-{
-	public final static String s4="You just attempted to do payment to wfm via card. \r\n"
-			+ "Please reach out to customer support if you did not attempt a payment.\r\n YOUR PAYMENT IS MADE SUCCESSFULL."
-			+ "\r\n"
-			+ "\r\n"
-			+"Thanks & Regards \r\n"
-			+ "Team WFM.";
-	public final static String s5="You just attempted to do payment to wfm via UPI. \r\n"
-			+ "Please reach out to customer support if you did not attempt a payment.\r\n YOUR PAYMENT IS MADE SUCCESSFULL."
-			+ "\r\n"
-			+ "\r\n"
-			+"Thanks & Regards \r\n"
-			+ "Team WFM.";
+
+
+public class MailMessage{
+	
 	public final static String s1="You just attempted to login to wfm. Your OTP is {OTP}.\r\n"
 			+ "Please reach out to customer support if you did not attempt a login.\r\n DONT SHARE THE OTP WITH ANYONE."
 			+ "\r\n"
@@ -55,6 +45,9 @@ public class MailMessage
 		  }
 	    	
 	    }
+	
+
+		
 	
 
 }
