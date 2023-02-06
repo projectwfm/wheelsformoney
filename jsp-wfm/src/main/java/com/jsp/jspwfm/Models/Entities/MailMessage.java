@@ -1,9 +1,7 @@
 package com.jsp.jspwfm.Models.Entities;
 
-
-
-public class MailMessage{
-	
+public class MailMessage 
+{
 	public final static String s1="You just attempted to login to wfm. Your OTP is {OTP}.\r\n"
 			+ "Please reach out to customer support if you did not attempt a login.\r\n DONT SHARE THE OTP WITH ANYONE."
 			+ "\r\n"
@@ -45,9 +43,6 @@ public class MailMessage{
 		  }
 	    	
 	    }
-	
-
-		
 	
 
 }

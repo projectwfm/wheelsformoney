@@ -10,10 +10,6 @@ import lombok.*;
 
 @Data
 @ToString
-//@Getter
-//@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
 @Entity
 @Table(name = "Users")
 public class User {
@@ -39,29 +35,11 @@ public class User {
 
 
 
-//	@Override
-//	public String toString() {
-//		return "User [address=" + address + ", user_id=" + user_id + ", username=" + username + ", password=" + password
-//				+ ", email=" + email + ", dob=" + dob + ", gender=" + gender + ", phno=" + phno + "]";
-//	}
 
-
-
-//	public Address getAddress() {
-//		return address;
-//	}
-//	public void setAddress(Address address) {
-//		this.address = address;
-//	}
-//	public long getUser_id() {
-//		return user_id;
-//	}
-//	public void setUser_id(long user_id) {
 //		this.user_id = user_id;
 //	}
 //	public String getUsername() {
 //		return username;
-//	}
 //	public void setUsername(String username) {
 //		this.username = username;
 //	}
