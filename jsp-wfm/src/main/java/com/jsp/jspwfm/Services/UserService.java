@@ -92,22 +92,6 @@ public class UserService {
 
 		}
 	}
-//	 public String pswdrequest(String data,String newpass)
-//	    {
-//	    	User u1=usersRepository.getUserBydata(data);
-//	    	if(u1!=null)
-//	    	{
-//	    		u1.setPassword(newpass);
-//	    		usersRepository.save(u1);
-//	    		return "password resetted sucessfully";
-//	    		
-//	    	}
-//	    	else
-//	    	{
-//	    		return "There is no user found with "+data+" signup first please!!.... ";
-//	    	}
-//	    
-//	    }
 
 	 public Object pswdrequest(String email)
 	    {
@@ -125,8 +109,7 @@ public class UserService {
 	             mailMessage.setText("this is your OTP "+OTP);
 	             mailMessage.setSubject("OTP from WFM JSPider");
 	             
-	             javaMailSender.send(mailMessage);	             
-	             System.out.println("===================  OTP sent Successfully  =======================");
+	             javaMailSender.send(mailMessage);	            
 	    		return OTP;
 	    	}
 	    	else
@@ -135,7 +118,7 @@ public class UserService {
 	    	}
 	    
 	    }
-// overloading the above method  to  make the code reuseability for signup, login and forgetpassword
+
 	 public int pswdrequesttype(String email, String type)
 	    {
 	    	User u1=usersRepository.getUserBydata(email);
@@ -158,7 +141,6 @@ public class UserService {
 			             mailMessage.setSubject("OTP from WFM SignUp");
 			             
 			             javaMailSender.send(mailMessage);	             
-			             System.out.println("===================  OTP sent Successfully  =======================");
 			    		return OTP;
 		    		}
 		    		catch(Exception e)
@@ -197,8 +179,7 @@ public class UserService {
 			             }
 			             
 			             
-			             javaMailSender.send(mailMessage);	             
-			             System.out.println("===================  OTP sent Successfully  =======================");
+			             javaMailSender.send(mailMessage);	            
 			    		return OTP;
 		    		}
 		    		catch(Exception e)
@@ -222,8 +203,7 @@ public class UserService {
 		usersRepository.save(u1);
 		return "Password updated succefully....!!!!!!";
 	}
-//     Above codes i have written 
-////////////////////////////////////////////////////////////////////////////////////////////	
+	
 	@Autowired
 	OtpRepository Otprepository;
 
