@@ -1,22 +1,31 @@
 package com.jsp.jspwfm.Services;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import com.jsp.jspwfm.Dao.BikeDao;
+import com.jsp.jspwfm.Dao.CarDao;
 import com.jsp.jspwfm.Dao.OtpRepository;
 import com.jsp.jspwfm.Dao.UsersRepository;
 import com.jsp.jspwfm.Exception.PasswordInvalidException;
 import com.jsp.jspwfm.Exception.UserAlreadyExistsException;
 import com.jsp.jspwfm.Exception.UserNotFoundException;
+import com.jsp.jspwfm.Models.Entities.Address;
+import com.jsp.jspwfm.Models.Entities.Address1;
 import com.jsp.jspwfm.Models.Entities.MailMessage;
 import com.jsp.jspwfm.Models.Entities.Otp;
 import com.jsp.jspwfm.Models.Entities.User;
-
-import java.util.Random;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.SimpleMailMessage;
 
 
 
@@ -24,6 +33,8 @@ import org.springframework.mail.SimpleMailMessage;
 @Service
 @Component
 public class UserService {
+	
+	static Logger log= LogManager.getLogger(UserService.class);
 
     @Autowired
     UsersRepository usersRepository;
@@ -36,18 +47,26 @@ public class UserService {
     @Value("${spring.mail.username}") 
     private String fromemail;
 
-  
+    
+    @Autowired
+    BikeDao bikedao;
+    
+    @Autowired
+    CarDao cardao;
+    
     public User getUser(String username, String password)
     {
         return usersRepository.getUserByUsername(username);
     }
     public boolean handleSignUp(User user)
     {
+    	log.info("handle signUp excuted for email ");
     	User reslut=usersRepository.getUserByUsername(user.getUsername());
 		try
 		{
 			if(reslut!=null)
 			{
+				log.error("Exception occured ");
 				throw new UserAlreadyExistsException();
 				
 			}
@@ -59,6 +78,7 @@ public class UserService {
 		}
 		catch(Exception e)
 		{
+			log.info(" Exception details:  ");
 			System.out.println(e.getMessage());
 			return false;
 		}
@@ -75,6 +95,7 @@ public class UserService {
 			} 
 			else {
 				try {
+					log.error("Exception occured ");
 					throw new PasswordInvalidException();
 				} catch (PasswordInvalidException exception) {
 					return exception.getMessage();
@@ -86,6 +107,7 @@ public class UserService {
 		try
 
 		{
+			log.error("Exception occured ");
 			throw new UserNotFoundException();
 		} catch (UserNotFoundException exception) {
 			return exception.getMessage();
@@ -145,6 +167,7 @@ public class UserService {
 		    		}
 		    		catch(Exception e)
 		    		{
+		    			log.info(" Exception details:  ");
 		    			e.printStackTrace();
 		    			return 0;
 		    		}
@@ -184,6 +207,7 @@ public class UserService {
 		    		}
 		    		catch(Exception e)
 		    		{
+		    			log.info(" Exception details:  ");
 		    			e.printStackTrace();
 		    			return 0;
 		    		}
@@ -232,6 +256,7 @@ public class UserService {
 				return otp;
 			} else {
 				try {
+					log.error("Exception occured ");
 					throw new UserAlreadyExistsException();
 				} catch (UserAlreadyExistsException exception) {
 					return exception.getMessage();
@@ -268,6 +293,7 @@ public class UserService {
 				return otp;
 			} else {
 				try {
+					log.error("Exception occured ");
 					throw new UserNotFoundException();
 				} catch (UserNotFoundException exception) {
 					return exception.getMessage();
@@ -293,6 +319,78 @@ public class UserService {
 		}
 
 	}
-
+	public boolean edit(User user)
+	 {
+		 User u = usersRepository.getUserByUsername(user.getUsername());
+		if(u!=null) { 
+		 Address ad = user.getAddress();
+		 Address1 ad1 = ad.getAddress1(); 
+		 ad.setAddress1(ad1);
+		 u.setAddress(ad);
+		 u.setUsername(user.getUsername());
+		 u.setDob(user.getDob());
+		 u.setGender(user.getGender());
+		 u.setPhno(user.getPhno());
+		 usersRepository.save(u);
+		return true;
+		}
+		return false;
+	 }
+	 public User getUserData(String username)
+	 {
+		 return usersRepository.getUserByUsername(username);
+	 }
+	 
+	 public Map getVehicle()
+		{
+			
+			Map<String,List> m1=new HashMap<String,List>();
+			m1.put("bike", bikedao.findAll());
+			m1.put("car",cardao.findAll());
+			return m1;
+		}
+	 
+	public boolean cardpayment(long cardno,int cvv,String email)
+		 {
+			 int len = (int) (Math.log10(cardno) + 1);
+			 int len1 = (int) (Math.log10(cvv) + 1);
+			 if(len==16&&len1==3)
+			 {
+		    		String s=MailMessage.s4;
+					SimpleMailMessage mailMessage = new SimpleMailMessage();
+					mailMessage.setFrom(fromemail);
+					mailMessage.setTo(email);
+					mailMessage.setText(s);
+					mailMessage.setSubject("PAYMENT MAIL");
+					mailsender.send(mailMessage);
+				 return true;
+			 }
+			 else
+			 {
+				 return false;
+			 }
+		 }
+		 public boolean upipayment(String upi_id,String email )
+		 {
+			 int i=upi_id.indexOf('@');
+			 if(i>0)
+			 {
+				 
+				 String s=MailMessage.s5;
+					SimpleMailMessage mailMessage = new SimpleMailMessage();
+					mailMessage.setFrom(fromemail);
+					mailMessage.setTo(email);
+					mailMessage.setText(s);
+					mailMessage.setSubject("PAYMENT MAIL");
+					mailsender.send(mailMessage);
+				 return true;
+			 }
+			 else
+			 {
+				 return false;
+			 }
+		}
+ 
+	
 	
 }

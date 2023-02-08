@@ -105,11 +105,11 @@ public class MerchantService
 		{
 			log.info("excuting the handel reset passwird for merchant "+ email);
 			Merchant merchant= merchantDaolayer.findByEmail(email);
-			merchant.setPassword(newpassword);
-			Merchant merchant2= merchantDaolayer.save(merchant);
-			if(merchant2!= null)
+			if(merchant!= null)
 			{
-				log.info(" Password reseted successfully for "+ email);
+			merchant.setPassword(newpassword);
+			 merchantDaolayer.save(merchant);
+			log.info(" Password reseted successfully for "+ email);
 				return true;
 			}
 			else

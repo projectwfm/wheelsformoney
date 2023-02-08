@@ -26,41 +26,6 @@ public class Image
 	private String type;
 	private String name;
 	
-	
-
-	public int getImid() {
-		return imid;
-	}
-
-	public void setImid(int imid) {
-		this.imid = imid;
-	}
-
-	public byte[] getImagedata() {
-		return imagedata;
-	}
-
-	
-	public void setImagedata(byte[] imagedata) {
-		this.imagedata = imagedata;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public Image(byte[] imagedata, String name, String type) {
 		super();
 		this.imagedata = imagedata;

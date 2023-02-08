@@ -90,19 +90,6 @@ public class BikeController
 		return ResponseEntity.status(200).body("removed successfully");
 	}
 	
-//	@RequestMapping("/updatebyid/{id}")
-//	public ResponseEntity<Bike> update(@PathVariable("id") long id)
-//	{
-//		Bike bike= bikeservice.handleupdatebike(id);
-//		if(bike!= null)
-//		{
-//			return ResponseEntity.status(200).body(bike);
-//		}
-//		else
-//		{
-//			return ResponseEntity.status(400).body(bike);
-//		}
-//	}
 	
 	@RequestMapping(value={"/update"}, consumes= {MediaType.MULTIPART_FORM_DATA_VALUE})
 	public ResponseEntity<Bike> update1(@RequestPart("image") MultipartFile file, @RequestPart("bike") Bike bike) throws IOException
